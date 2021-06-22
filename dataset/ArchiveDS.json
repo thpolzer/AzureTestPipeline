@@ -1,0 +1,24 @@
+{
+	"name": "ArchiveDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_RawData",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "archivedata.csv",
+				"folderPath": "BigQuery",
+				"container": "archive"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

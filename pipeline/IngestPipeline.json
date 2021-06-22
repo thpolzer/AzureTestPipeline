@@ -1,0 +1,119 @@
+{
+	"name": "IngestPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "List Tables",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "GoogleBigQuerySource",
+						"query": "SELECT * FROM `data-ingest-20210615.testdata.INFORMATION_SCHEMA.TABLES`"
+					},
+					"dataset": {
+						"referenceName": "DS_GoogleBigQuery_SourceTable",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "List Tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('List Tables').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Export Table",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "GoogleBigQuerySource"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_BigQueryTable",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										},
+										"SchemaName": {
+											"value": "@item().table_schema",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_BlobStorage",
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@concat(item().table_schema,'_',item().table_name)",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-06-22T13:08:21Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

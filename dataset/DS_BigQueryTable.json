@@ -1,0 +1,31 @@
+{
+	"name": "DS_BigQueryTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_GoogleBigQuery",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			},
+			"SchemaName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "GoogleBigQueryObject",
+		"schema": [],
+		"typeProperties": {
+			"dataset": {
+				"value": "@dataset().SchemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

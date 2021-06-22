@@ -1,0 +1,17 @@
+{
+	"name": "GoogleBigQuery_TimeseriesData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "GoogleBigQuery_Data",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "GoogleBigQueryObject",
+		"schema": [],
+		"typeProperties": {
+			"dataset": "cdh",
+			"table": "timeseriesdata"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
