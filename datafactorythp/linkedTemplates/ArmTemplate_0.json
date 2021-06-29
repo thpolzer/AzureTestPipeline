@@ -1,0 +1,1233 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "datafactorythp"
+		},
+		"AzureBlobStorage_RawData_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage_RawData'"
+		},
+		"GoogleBigQueryManager_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'GoogleBigQueryManager'"
+		},
+		"GoogleBigQueryManager_refreshToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'refreshToken' of 'GoogleBigQueryManager'"
+		},
+		"GoogleBigQuery_Data_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'GoogleBigQuery_Data'"
+		},
+		"GoogleBigQuery_Data_refreshToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'refreshToken' of 'GoogleBigQuery_Data'"
+		},
+		"LS_AzureBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_AzureBlobStorage'"
+		},
+		"LS_GoogleBigQuery_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'LS_GoogleBigQuery'"
+		},
+		"LS_GoogleBigQuery_refreshToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'refreshToken' of 'LS_GoogleBigQuery'"
+		},
+		"LS_GoogleBigQuery_adac_gcp_project_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'LS_GoogleBigQuery_adac_gcp_project'"
+		},
+		"LS_GoogleBigQuery_adac_gcp_project_refreshToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'refreshToken' of 'LS_GoogleBigQuery_adac_gcp_project'"
+		},
+		"LS_GoogleCloudStorage_adac_project_secretAccessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'secretAccessKey' of 'LS_GoogleCloudStorage_adac_project'"
+		},
+		"GoogleBigQueryManager_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "320079480011-rrrlls748n3dkqb37c8jg3666gf1me5j.apps.googleusercontent.com"
+		},
+		"GoogleBigQuery_Data_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "794272712076-dcc7s4veb66ave8r0t36vdbrm8j5i0bi.apps.googleusercontent.com"
+		},
+		"LS_GoogleBigQuery_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "320079480011-ohmpqseu8av2icu6tenb043dl92i76d6.apps.googleusercontent.com"
+		},
+		"LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "491438322318-guaifos8qru134k5qn5rcauspf4pk84c.apps.googleusercontent.com"
+		},
+		"LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId": {
+			"type": "string",
+			"defaultValue": "GOOGFXAJYXNUZK2DFT4GMTC7"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage_RawData')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This storage layer will hold all data coming from dedicated GCP Big Query Tables",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage_RawData_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GoogleBigQueryManager')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "GoogleBigQuery",
+				"typeProperties": {
+					"project": "data-ingest-20210615",
+					"requestGoogleDriveScope": false,
+					"authenticationType": "UserAuthentication",
+					"clientId": "[parameters('GoogleBigQueryManager_properties_typeProperties_clientId')]",
+					"clientSecret": {
+						"type": "SecureString",
+						"value": "[parameters('GoogleBigQueryManager_clientSecret')]"
+					},
+					"refreshToken": {
+						"type": "SecureString",
+						"value": "[parameters('GoogleBigQueryManager_refreshToken')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GoogleBigQuery_Data')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "GoogleBigQuery",
+				"typeProperties": {
+					"project": "cdh-dev-20210610",
+					"requestGoogleDriveScope": false,
+					"authenticationType": "UserAuthentication",
+					"clientId": "[parameters('GoogleBigQuery_Data_properties_typeProperties_clientId')]",
+					"clientSecret": {
+						"type": "SecureString",
+						"value": "[parameters('GoogleBigQuery_Data_clientSecret')]"
+					},
+					"refreshToken": {
+						"type": "SecureString",
+						"value": "[parameters('GoogleBigQuery_Data_refreshToken')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_AzureBlobStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_AzureBlobStorage_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_GoogleBigQuery')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This Linkes Service handles BigQuery access",
+				"annotations": [],
+				"type": "GoogleBigQuery",
+				"typeProperties": {
+					"project": "data-ingest-20210615",
+					"requestGoogleDriveScope": false,
+					"authenticationType": "UserAuthentication",
+					"clientId": "[parameters('LS_GoogleBigQuery_properties_typeProperties_clientId')]",
+					"clientSecret": {
+						"type": "SecureString",
+						"value": "[parameters('LS_GoogleBigQuery_clientSecret')]"
+					},
+					"refreshToken": {
+						"type": "SecureString",
+						"value": "[parameters('LS_GoogleBigQuery_refreshToken')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_GoogleBigQuery_adac_gcp_project')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "GoogleBigQuery",
+				"typeProperties": {
+					"project": "adac-test",
+					"requestGoogleDriveScope": false,
+					"authenticationType": "UserAuthentication",
+					"clientId": "[parameters('LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId')]",
+					"clientSecret": {
+						"type": "SecureString",
+						"value": "[parameters('LS_GoogleBigQuery_adac_gcp_project_clientSecret')]"
+					},
+					"refreshToken": {
+						"type": "SecureString",
+						"value": "[parameters('LS_GoogleBigQuery_adac_gcp_project_refreshToken')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_GoogleCloudStorage_adac_project')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "GoogleCloudStorage",
+				"typeProperties": {
+					"serviceUrl": "https://storage.googleapis.com",
+					"accessKeyId": "[parameters('LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId')]",
+					"secretAccessKey": {
+						"type": "SecureString",
+						"value": "[parameters('LS_GoogleCloudStorage_adac_project_secretAccessKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ArchiveDS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_RawData",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "archivedata.csv",
+						"folderPath": "BigQuery",
+						"container": "archive"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_RawData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DC_GCS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_GoogleCloudStorage_adac_project",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "GoogleCloudStorageLocation",
+						"bucketName": "adac-cdh-test",
+						"fileName": "testdata.json"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"visitNumber": {
+							"type": "string"
+						},
+						"visitId": {
+							"type": "string"
+						},
+						"visitStartTime": {
+							"type": "string"
+						},
+						"date": {
+							"type": "string"
+						},
+						"totals": {
+							"type": "object",
+							"properties": {
+								"visits": {
+									"type": "string"
+								},
+								"hits": {
+									"type": "string"
+								},
+								"pageviews": {
+									"type": "string"
+								},
+								"bounces": {
+									"type": "string"
+								},
+								"newVisits": {
+									"type": "string"
+								},
+								"sessionQualityDim": {
+									"type": "string"
+								}
+							}
+						},
+						"trafficSource": {
+							"type": "object",
+							"properties": {
+								"campaign": {
+									"type": "string"
+								},
+								"source": {
+									"type": "string"
+								},
+								"medium": {
+									"type": "string"
+								},
+								"adwordsClickInfo": {
+									"type": "object",
+									"properties": {
+										"criteriaParameters": {
+											"type": "string"
+										}
+									}
+								},
+								"referralPath": {
+									"type": "string"
+								}
+							}
+						},
+						"device": {
+							"type": "object",
+							"properties": {
+								"browser": {
+									"type": "string"
+								},
+								"browserVersion": {
+									"type": "string"
+								},
+								"browserSize": {
+									"type": "string"
+								},
+								"operatingSystem": {
+									"type": "string"
+								},
+								"operatingSystemVersion": {
+									"type": "string"
+								},
+								"isMobile": {
+									"type": "boolean"
+								},
+								"mobileDeviceBranding": {
+									"type": "string"
+								},
+								"mobileDeviceModel": {
+									"type": "string"
+								},
+								"mobileInputSelector": {
+									"type": "string"
+								},
+								"mobileDeviceInfo": {
+									"type": "string"
+								},
+								"mobileDeviceMarketingName": {
+									"type": "string"
+								},
+								"flashVersion": {
+									"type": "string"
+								},
+								"language": {
+									"type": "string"
+								},
+								"screenColors": {
+									"type": "string"
+								},
+								"screenResolution": {
+									"type": "string"
+								},
+								"deviceCategory": {
+									"type": "string"
+								}
+							}
+						},
+						"geoNetwork": {
+							"type": "object",
+							"properties": {
+								"continent": {
+									"type": "string"
+								},
+								"subContinent": {
+									"type": "string"
+								},
+								"country": {
+									"type": "string"
+								},
+								"region": {
+									"type": "string"
+								},
+								"metro": {
+									"type": "string"
+								},
+								"city": {
+									"type": "string"
+								},
+								"cityId": {
+									"type": "string"
+								},
+								"networkDomain": {
+									"type": "string"
+								},
+								"latitude": {
+									"type": "string"
+								},
+								"longitude": {
+									"type": "string"
+								},
+								"networkLocation": {
+									"type": "string"
+								}
+							}
+						},
+						"customDimensions": {
+							"type": "array"
+						},
+						"hits": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"hitNumber": {
+										"type": "string"
+									},
+									"time": {
+										"type": "string"
+									},
+									"hour": {
+										"type": "string"
+									},
+									"minute": {
+										"type": "string"
+									},
+									"isInteraction": {
+										"type": "boolean"
+									},
+									"isEntrance": {
+										"type": "boolean"
+									},
+									"isExit": {
+										"type": "boolean"
+									},
+									"referer": {
+										"type": "string"
+									},
+									"page": {
+										"type": "object",
+										"properties": {
+											"pagePath": {
+												"type": "string"
+											},
+											"hostname": {
+												"type": "string"
+											},
+											"pageTitle": {
+												"type": "string"
+											},
+											"pagePathLevel1": {
+												"type": "string"
+											},
+											"pagePathLevel2": {
+												"type": "string"
+											},
+											"pagePathLevel3": {
+												"type": "string"
+											},
+											"pagePathLevel4": {
+												"type": "string"
+											}
+										}
+									},
+									"appInfo": {
+										"type": "object",
+										"properties": {
+											"screenName": {
+												"type": "string"
+											},
+											"landingScreenName": {
+												"type": "string"
+											},
+											"exitScreenName": {
+												"type": "string"
+											},
+											"screenDepth": {
+												"type": "string"
+											}
+										}
+									},
+									"exceptionInfo": {
+										"type": "object",
+										"properties": {
+											"isFatal": {
+												"type": "boolean"
+											}
+										}
+									},
+									"product": {
+										"type": "array"
+									},
+									"promotion": {
+										"type": "array"
+									},
+									"eCommerceAction": {
+										"type": "object",
+										"properties": {
+											"action_type": {
+												"type": "string"
+											},
+											"step": {
+												"type": "string"
+											}
+										}
+									},
+									"experiment": {
+										"type": "array"
+									},
+									"customVariables": {
+										"type": "array"
+									},
+									"customDimensions": {
+										"type": "array"
+									},
+									"customMetrics": {
+										"type": "array"
+									},
+									"type": {
+										"type": "string"
+									},
+									"social": {
+										"type": "object",
+										"properties": {
+											"socialNetwork": {
+												"type": "string"
+											},
+											"hasSocialSourceReferral": {
+												"type": "string"
+											},
+											"socialInteractionNetworkAction": {
+												"type": "string"
+											}
+										}
+									},
+									"contentGroup": {
+										"type": "object",
+										"properties": {
+											"contentGroup1": {
+												"type": "string"
+											},
+											"contentGroup2": {
+												"type": "string"
+											},
+											"contentGroup3": {
+												"type": "string"
+											},
+											"contentGroup4": {
+												"type": "string"
+											},
+											"contentGroup5": {
+												"type": "string"
+											},
+											"previousContentGroup1": {
+												"type": "string"
+											},
+											"previousContentGroup2": {
+												"type": "string"
+											},
+											"previousContentGroup3": {
+												"type": "string"
+											},
+											"previousContentGroup4": {
+												"type": "string"
+											},
+											"previousContentGroup5": {
+												"type": "string"
+											}
+										}
+									},
+									"dataSource": {
+										"type": "string"
+									},
+									"publisher_infos": {
+										"type": "array"
+									}
+								}
+							}
+						},
+						"fullVisitorId": {
+							"type": "string"
+						},
+						"channelGrouping": {
+							"type": "string"
+						},
+						"socialEngagementType": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_GoogleCloudStorage_adac_project')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_BigQueryTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_GoogleBigQuery",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"TableName": {
+						"type": "string"
+					},
+					"SchemaName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "GoogleBigQueryObject",
+				"schema": [],
+				"typeProperties": {
+					"dataset": {
+						"value": "@dataset().SchemaName",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().TableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_GoogleBigQuery')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_BlobStorage')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().FileName",
+							"type": "Expression"
+						},
+						"container": "rawzone"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_AzureBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_GoogleBigQuery_SourceTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_GoogleBigQuery",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "GoogleBigQueryObject",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_GoogleBigQuery')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GoogleBigQuery_TimeseriesData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "GoogleBigQuery_Data",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "GoogleBigQueryObject",
+				"schema": [],
+				"typeProperties": {
+					"dataset": "cdh",
+					"table": "timeseriesdata"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/GoogleBigQuery_Data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Output_BigQuery')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_RawData",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "timeseries.csv",
+						"folderPath": "BigQueryTables",
+						"container": "test"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_RawData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/IngestPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "List Tables",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "GoogleBigQuerySource",
+								"query": "SELECT * FROM `data-ingest-20210615.testdata.INFORMATION_SCHEMA.TABLES`"
+							},
+							"dataset": {
+								"referenceName": "DS_GoogleBigQuery_SourceTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "List Tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('List Tables').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Export Table",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "GoogleBigQuerySource"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "DS_BigQueryTable",
+											"type": "DatasetReference",
+											"parameters": {
+												"TableName": {
+													"value": "@item().table_name",
+													"type": "Expression"
+												},
+												"SchemaName": {
+													"value": "@item().table_schema",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DS_BlobStorage",
+											"type": "DatasetReference",
+											"parameters": {
+												"FileName": {
+													"value": "@concat(item().table_schema,'_',item().table_name)",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"annotations": [],
+				"lastPublishTime": "2021-06-22T13:08:21Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_GoogleBigQuery_SourceTable')]",
+				"[concat(variables('factoryId'), '/datasets/DS_BigQueryTable')]",
+				"[concat(variables('factoryId'), '/datasets/DS_BlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "GoogleBigQuerySource"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "TYPE",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "TYPE",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "STATION",
+											"type": "String"
+										},
+										"sink": {
+											"name": "STATION",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CALENDARYEAR",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "CALENDARYEAR",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DAY",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DAY",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ALLOCATION",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "ALLOCATION",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CAPACITY",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "CAPACITY",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "GoogleBigQuery_TimeseriesData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Output_BigQuery",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy data2",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Output_BigQuery",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ArchiveDS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": [],
+				"lastPublishTime": "2021-06-14T09:29:41Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/GoogleBigQuery_TimeseriesData')]",
+				"[concat(variables('factoryId'), '/datasets/Output_BigQuery')]",
+				"[concat(variables('factoryId'), '/datasets/ArchiveDS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "List Tables",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "GoogleBigQuerySource",
+								"query": "SELECT * FROM `data-ingest-20210615.testdata.INFORMATION_SCHEMA.TABLES`"
+							},
+							"dataset": {
+								"referenceName": "DS_GoogleBigQuery_SourceTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "List Tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('List Tables').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Export Table",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "GoogleBigQuerySource"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "DS_BigQueryTable",
+											"type": "DatasetReference",
+											"parameters": {
+												"TableName": {
+													"value": "@item().table_name",
+													"type": "Expression"
+												},
+												"SchemaName": {
+													"value": "@item().table_schema",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DS_BlobStorage",
+											"type": "DatasetReference",
+											"parameters": {
+												"FileName": {
+													"value": "@concat(item().table_schema,'_',item().table_name)",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"annotations": [],
+				"lastPublishTime": "2021-06-22T13:07:11Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_GoogleBigQuery_SourceTable')]",
+				"[concat(variables('factoryId'), '/datasets/DS_BigQueryTable')]",
+				"[concat(variables('factoryId'), '/datasets/DS_BlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TriggerTest')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline1",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-06-14T09:01:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								2
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
+		}
+	]
+}

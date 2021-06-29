@@ -1,0 +1,57 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "datafactorythp"
+		},
+		"AzureBlobStorage_RawData_connectionString": {
+			"value": ""
+		},
+		"GoogleBigQueryManager_clientSecret": {
+			"value": ""
+		},
+		"GoogleBigQueryManager_refreshToken": {
+			"value": ""
+		},
+		"GoogleBigQuery_Data_clientSecret": {
+			"value": ""
+		},
+		"GoogleBigQuery_Data_refreshToken": {
+			"value": ""
+		},
+		"LS_AzureBlobStorage_connectionString": {
+			"value": ""
+		},
+		"LS_GoogleBigQuery_clientSecret": {
+			"value": ""
+		},
+		"LS_GoogleBigQuery_refreshToken": {
+			"value": ""
+		},
+		"LS_GoogleBigQuery_adac_gcp_project_clientSecret": {
+			"value": ""
+		},
+		"LS_GoogleBigQuery_adac_gcp_project_refreshToken": {
+			"value": ""
+		},
+		"LS_GoogleCloudStorage_adac_project_secretAccessKey": {
+			"value": ""
+		},
+		"GoogleBigQueryManager_properties_typeProperties_clientId": {
+			"value": "320079480011-rrrlls748n3dkqb37c8jg3666gf1me5j.apps.googleusercontent.com"
+		},
+		"GoogleBigQuery_Data_properties_typeProperties_clientId": {
+			"value": "794272712076-dcc7s4veb66ave8r0t36vdbrm8j5i0bi.apps.googleusercontent.com"
+		},
+		"LS_GoogleBigQuery_properties_typeProperties_clientId": {
+			"value": "320079480011-ohmpqseu8av2icu6tenb043dl92i76d6.apps.googleusercontent.com"
+		},
+		"LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId": {
+			"value": "491438322318-guaifos8qru134k5qn5rcauspf4pk84c.apps.googleusercontent.com"
+		},
+		"LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId": {
+			"value": "GOOGFXAJYXNUZK2DFT4GMTC7"
+		}
+	}
+}

@@ -1,0 +1,154 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "datafactorythp"
+		},
+		"AzureBlobStorage_RawData_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage_RawData'"
+		},
+		"GoogleBigQueryManager_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'GoogleBigQueryManager'"
+		},
+		"GoogleBigQueryManager_refreshToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'refreshToken' of 'GoogleBigQueryManager'"
+		},
+		"GoogleBigQuery_Data_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'GoogleBigQuery_Data'"
+		},
+		"GoogleBigQuery_Data_refreshToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'refreshToken' of 'GoogleBigQuery_Data'"
+		},
+		"LS_AzureBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_AzureBlobStorage'"
+		},
+		"LS_GoogleBigQuery_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'LS_GoogleBigQuery'"
+		},
+		"LS_GoogleBigQuery_refreshToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'refreshToken' of 'LS_GoogleBigQuery'"
+		},
+		"LS_GoogleBigQuery_adac_gcp_project_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'LS_GoogleBigQuery_adac_gcp_project'"
+		},
+		"LS_GoogleBigQuery_adac_gcp_project_refreshToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'refreshToken' of 'LS_GoogleBigQuery_adac_gcp_project'"
+		},
+		"LS_GoogleCloudStorage_adac_project_secretAccessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'secretAccessKey' of 'LS_GoogleCloudStorage_adac_project'"
+		},
+		"GoogleBigQueryManager_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "320079480011-rrrlls748n3dkqb37c8jg3666gf1me5j.apps.googleusercontent.com"
+		},
+		"GoogleBigQuery_Data_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "794272712076-dcc7s4veb66ave8r0t36vdbrm8j5i0bi.apps.googleusercontent.com"
+		},
+		"LS_GoogleBigQuery_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "320079480011-ohmpqseu8av2icu6tenb043dl92i76d6.apps.googleusercontent.com"
+		},
+		"LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "491438322318-guaifos8qru134k5qn5rcauspf4pk84c.apps.googleusercontent.com"
+		},
+		"LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId": {
+			"type": "string",
+			"defaultValue": "GOOGFXAJYXNUZK2DFT4GMTC7"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "datafactorythp_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage_RawData_connectionString": {
+						"value": "[parameters('AzureBlobStorage_RawData_connectionString')]"
+					},
+					"GoogleBigQueryManager_clientSecret": {
+						"value": "[parameters('GoogleBigQueryManager_clientSecret')]"
+					},
+					"GoogleBigQueryManager_refreshToken": {
+						"value": "[parameters('GoogleBigQueryManager_refreshToken')]"
+					},
+					"GoogleBigQuery_Data_clientSecret": {
+						"value": "[parameters('GoogleBigQuery_Data_clientSecret')]"
+					},
+					"GoogleBigQuery_Data_refreshToken": {
+						"value": "[parameters('GoogleBigQuery_Data_refreshToken')]"
+					},
+					"LS_AzureBlobStorage_connectionString": {
+						"value": "[parameters('LS_AzureBlobStorage_connectionString')]"
+					},
+					"LS_GoogleBigQuery_clientSecret": {
+						"value": "[parameters('LS_GoogleBigQuery_clientSecret')]"
+					},
+					"LS_GoogleBigQuery_refreshToken": {
+						"value": "[parameters('LS_GoogleBigQuery_refreshToken')]"
+					},
+					"LS_GoogleBigQuery_adac_gcp_project_clientSecret": {
+						"value": "[parameters('LS_GoogleBigQuery_adac_gcp_project_clientSecret')]"
+					},
+					"LS_GoogleBigQuery_adac_gcp_project_refreshToken": {
+						"value": "[parameters('LS_GoogleBigQuery_adac_gcp_project_refreshToken')]"
+					},
+					"LS_GoogleCloudStorage_adac_project_secretAccessKey": {
+						"value": "[parameters('LS_GoogleCloudStorage_adac_project_secretAccessKey')]"
+					},
+					"GoogleBigQueryManager_properties_typeProperties_clientId": {
+						"value": "[parameters('GoogleBigQueryManager_properties_typeProperties_clientId')]"
+					},
+					"GoogleBigQuery_Data_properties_typeProperties_clientId": {
+						"value": "[parameters('GoogleBigQuery_Data_properties_typeProperties_clientId')]"
+					},
+					"LS_GoogleBigQuery_properties_typeProperties_clientId": {
+						"value": "[parameters('LS_GoogleBigQuery_properties_typeProperties_clientId')]"
+					},
+					"LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId": {
+						"value": "[parameters('LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId')]"
+					},
+					"LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId": {
+						"value": "[parameters('LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
