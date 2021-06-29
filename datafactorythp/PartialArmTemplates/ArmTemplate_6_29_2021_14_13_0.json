@@ -1,0 +1,40 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "datafactorythp"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_GoogleBigQuery_adac_gcp_project')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "GoogleBigQuery",
+				"typeProperties": {
+					"project": "adac-test",
+					"requestGoogleDriveScope": false,
+					"authenticationType": "UserAuthentication",
+					"clientId": "491438322318-guaifos8qru134k5qn5rcauspf4pk84c.apps.googleusercontent.com",
+					"clientSecret": {
+						"type": "SecureString",
+						"value": "**********"
+					},
+					"refreshToken": {
+						"type": "SecureString",
+						"value": "**********"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
