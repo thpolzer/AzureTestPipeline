@@ -35,6 +35,9 @@
 		"LS_GoogleBigQuery_adac_gcp_project_refreshToken": {
 			"value": ""
 		},
+		"LS_GoogleCloudStorage_adac_secretAccessKey": {
+			"value": ""
+		},
 		"LS_GoogleCloudStorage_adac_project_secretAccessKey": {
 			"value": ""
 		},
@@ -49,6 +52,9 @@
 		},
 		"LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId": {
 			"value": "491438322318-guaifos8qru134k5qn5rcauspf4pk84c.apps.googleusercontent.com"
+		},
+		"LS_GoogleCloudStorage_adac_properties_typeProperties_accessKeyId": {
+			"value": "GOOGFSYANZO4GMOI2TGGMC4V"
 		},
 		"LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId": {
 			"value": "GOOGFXAJYXNUZK2DFT4GMTC7"

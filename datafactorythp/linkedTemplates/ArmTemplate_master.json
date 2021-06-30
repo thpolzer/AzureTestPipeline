@@ -47,6 +47,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'refreshToken' of 'LS_GoogleBigQuery_adac_gcp_project'"
 		},
+		"LS_GoogleCloudStorage_adac_secretAccessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'secretAccessKey' of 'LS_GoogleCloudStorage_adac'"
+		},
 		"LS_GoogleCloudStorage_adac_project_secretAccessKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'secretAccessKey' of 'LS_GoogleCloudStorage_adac_project'"
@@ -66,6 +70,10 @@
 		"LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId": {
 			"type": "string",
 			"defaultValue": "491438322318-guaifos8qru134k5qn5rcauspf4pk84c.apps.googleusercontent.com"
+		},
+		"LS_GoogleCloudStorage_adac_properties_typeProperties_accessKeyId": {
+			"type": "string",
+			"defaultValue": "GOOGFSYANZO4GMOI2TGGMC4V"
 		},
 		"LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId": {
 			"type": "string",
@@ -128,6 +136,9 @@
 					"LS_GoogleBigQuery_adac_gcp_project_refreshToken": {
 						"value": "[parameters('LS_GoogleBigQuery_adac_gcp_project_refreshToken')]"
 					},
+					"LS_GoogleCloudStorage_adac_secretAccessKey": {
+						"value": "[parameters('LS_GoogleCloudStorage_adac_secretAccessKey')]"
+					},
 					"LS_GoogleCloudStorage_adac_project_secretAccessKey": {
 						"value": "[parameters('LS_GoogleCloudStorage_adac_project_secretAccessKey')]"
 					},
@@ -143,12 +154,35 @@
 					"LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId": {
 						"value": "[parameters('LS_GoogleBigQuery_adac_gcp_project_properties_typeProperties_clientId')]"
 					},
+					"LS_GoogleCloudStorage_adac_properties_typeProperties_accessKeyId": {
+						"value": "[parameters('LS_GoogleCloudStorage_adac_properties_typeProperties_accessKeyId')]"
+					},
 					"LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId": {
 						"value": "[parameters('LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "datafactorythp_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'datafactorythp_ArmTemplate_0')]"
+			]
 		}
 	]
 }
