@@ -1,10 +1,6 @@
 {
 	"name": "DC_GCS",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "LS_GoogleCloudStorage_adac_project",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {

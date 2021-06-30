@@ -11,7 +11,7 @@
 			"location": {
 				"type": "GoogleCloudStorageLocation",
 				"bucketName": "cdh-marketingdata",
-				"fileName": "testdata_subset_12.json"
+				"folderPath": "jsondata"
 			}
 		},
 		"schema": {
