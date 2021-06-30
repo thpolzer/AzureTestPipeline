@@ -20,7 +20,6 @@
 						"storeSettings": {
 							"type": "GoogleCloudStorageReadSettings",
 							"recursive": true,
-							"wildcardFileName": "*12.json",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -31,13 +30,859 @@
 						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings",
-							"copyBehavior": "MergeFiles"
+							"copyBehavior": "PreserveHierarchy"
 						},
 						"formatSettings": {
 							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['visitNumber']"
+								},
+								"sink": {
+									"name": "visitNumber"
+								}
+							},
+							{
+								"source": {
+									"path": "$['visitId']"
+								},
+								"sink": {
+									"name": "visitId"
+								}
+							},
+							{
+								"source": {
+									"path": "$['visitStartTime']"
+								},
+								"sink": {
+									"name": "visitStartTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['date']"
+								},
+								"sink": {
+									"name": "date"
+								}
+							},
+							{
+								"source": {
+									"path": "$['totals']['visits']"
+								},
+								"sink": {
+									"name": "visits"
+								}
+							},
+							{
+								"source": {
+									"path": "$['totals']['hits']"
+								},
+								"sink": {
+									"name": "hits"
+								}
+							},
+							{
+								"source": {
+									"path": "$['totals']['pageviews']"
+								},
+								"sink": {
+									"name": "pageviews"
+								}
+							},
+							{
+								"source": {
+									"path": "$['totals']['bounces']"
+								},
+								"sink": {
+									"name": "bounces"
+								}
+							},
+							{
+								"source": {
+									"path": "$['totals']['sessionQualityDim']"
+								},
+								"sink": {
+									"name": "sessionQualityDim"
+								}
+							},
+							{
+								"source": {
+									"path": "$['totals']['newVisits']"
+								},
+								"sink": {
+									"name": "newVisits"
+								}
+							},
+							{
+								"source": {
+									"path": "$['trafficSource']['campaign']"
+								},
+								"sink": {
+									"name": "campaign"
+								}
+							},
+							{
+								"source": {
+									"path": "$['trafficSource']['source']"
+								},
+								"sink": {
+									"name": "source"
+								}
+							},
+							{
+								"source": {
+									"path": "$['trafficSource']['medium']"
+								},
+								"sink": {
+									"name": "medium"
+								}
+							},
+							{
+								"source": {
+									"path": "$['trafficSource']['adwordsClickInfo']['criteriaParameters']"
+								},
+								"sink": {
+									"name": "criteriaParameters"
+								}
+							},
+							{
+								"source": {
+									"path": "$['trafficSource']['isTrueDirect']"
+								},
+								"sink": {
+									"name": "isTrueDirect"
+								}
+							},
+							{
+								"source": {
+									"path": "$['trafficSource']['referralPath']"
+								},
+								"sink": {
+									"name": "referralPath"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['browser']"
+								},
+								"sink": {
+									"name": "browser"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['browserVersion']"
+								},
+								"sink": {
+									"name": "browserVersion"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['browserSize']"
+								},
+								"sink": {
+									"name": "browserSize"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['operatingSystem']"
+								},
+								"sink": {
+									"name": "operatingSystem"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['operatingSystemVersion']"
+								},
+								"sink": {
+									"name": "operatingSystemVersion"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['isMobile']"
+								},
+								"sink": {
+									"name": "isMobile"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['mobileDeviceBranding']"
+								},
+								"sink": {
+									"name": "mobileDeviceBranding"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['mobileDeviceModel']"
+								},
+								"sink": {
+									"name": "mobileDeviceModel"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['mobileInputSelector']"
+								},
+								"sink": {
+									"name": "mobileInputSelector"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['mobileDeviceInfo']"
+								},
+								"sink": {
+									"name": "mobileDeviceInfo"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['mobileDeviceMarketingName']"
+								},
+								"sink": {
+									"name": "mobileDeviceMarketingName"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['flashVersion']"
+								},
+								"sink": {
+									"name": "flashVersion"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['language']"
+								},
+								"sink": {
+									"name": "language"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['screenColors']"
+								},
+								"sink": {
+									"name": "screenColors"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['screenResolution']"
+								},
+								"sink": {
+									"name": "screenResolution"
+								}
+							},
+							{
+								"source": {
+									"path": "$['device']['deviceCategory']"
+								},
+								"sink": {
+									"name": "deviceCategory"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['continent']"
+								},
+								"sink": {
+									"name": "continent"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['subContinent']"
+								},
+								"sink": {
+									"name": "subContinent"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['country']"
+								},
+								"sink": {
+									"name": "country"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['region']"
+								},
+								"sink": {
+									"name": "region"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['metro']"
+								},
+								"sink": {
+									"name": "metro"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['city']"
+								},
+								"sink": {
+									"name": "city"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['cityId']"
+								},
+								"sink": {
+									"name": "cityId"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['networkDomain']"
+								},
+								"sink": {
+									"name": "networkDomain"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['latitude']"
+								},
+								"sink": {
+									"name": "latitude"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['longitude']"
+								},
+								"sink": {
+									"name": "longitude"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geoNetwork']['networkLocation']"
+								},
+								"sink": {
+									"name": "networkLocation"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customDimensions'][0]['index']"
+								},
+								"sink": {
+									"name": "index"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customDimensions'][0]['value']"
+								},
+								"sink": {
+									"name": "value"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['hitNumber']"
+								},
+								"sink": {
+									"name": "hitNumber"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['time']"
+								},
+								"sink": {
+									"name": "time"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['hour']"
+								},
+								"sink": {
+									"name": "hour"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['minute']"
+								},
+								"sink": {
+									"name": "minute"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['isInteraction']"
+								},
+								"sink": {
+									"name": "isInteraction"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['isEntrance']"
+								},
+								"sink": {
+									"name": "isEntrance"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['isExit']"
+								},
+								"sink": {
+									"name": "isExit"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['page']['pagePath']"
+								},
+								"sink": {
+									"name": "pagePath"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['page']['hostname']"
+								},
+								"sink": {
+									"name": "hostname"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['page']['pageTitle']"
+								},
+								"sink": {
+									"name": "pageTitle"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['page']['pagePathLevel1']"
+								},
+								"sink": {
+									"name": "pagePathLevel1"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['page']['pagePathLevel2']"
+								},
+								"sink": {
+									"name": "pagePathLevel2"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['page']['pagePathLevel3']"
+								},
+								"sink": {
+									"name": "pagePathLevel3"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['page']['pagePathLevel4']"
+								},
+								"sink": {
+									"name": "pagePathLevel4"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['transaction']['currencyCode']"
+								},
+								"sink": {
+									"name": "hits'][0]['transaction_currencyCode"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['item']['currencyCode']"
+								},
+								"sink": {
+									"name": "hits'][0]['item_currencyCode"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['appInfo']['screenName']"
+								},
+								"sink": {
+									"name": "screenName"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['appInfo']['landingScreenName']"
+								},
+								"sink": {
+									"name": "landingScreenName"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['appInfo']['exitScreenName']"
+								},
+								"sink": {
+									"name": "exitScreenName"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['appInfo']['screenDepth']"
+								},
+								"sink": {
+									"name": "screenDepth"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['exceptionInfo']['isFatal']"
+								},
+								"sink": {
+									"name": "isFatal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['productSKU']"
+								},
+								"sink": {
+									"name": "productSKU"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['v2ProductName']"
+								},
+								"sink": {
+									"name": "v2ProductName"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['v2ProductCategory']"
+								},
+								"sink": {
+									"name": "v2ProductCategory"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['productVariant']"
+								},
+								"sink": {
+									"name": "productVariant"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['productBrand']"
+								},
+								"sink": {
+									"name": "productBrand"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['productPrice']"
+								},
+								"sink": {
+									"name": "productPrice"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['localProductPrice']"
+								},
+								"sink": {
+									"name": "localProductPrice"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['isImpression']"
+								},
+								"sink": {
+									"name": "isImpression"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['customDimensions']"
+								},
+								"sink": {
+									"name": "hits'][0]['product'][0]['customDimensions']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['customMetrics']"
+								},
+								"sink": {
+									"name": "hits'][0]['product'][0]['customMetrics']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['productListName']"
+								},
+								"sink": {
+									"name": "productListName"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['product'][0]['productListPosition']"
+								},
+								"sink": {
+									"name": "productListPosition"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['promotion']"
+								},
+								"sink": {
+									"name": "hits'][0]['promotion']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['eCommerceAction']['action_type']"
+								},
+								"sink": {
+									"name": "action_type"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['eCommerceAction']['step']"
+								},
+								"sink": {
+									"name": "step"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['experiment']"
+								},
+								"sink": {
+									"name": "hits'][0]['experiment']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['customVariables']"
+								},
+								"sink": {
+									"name": "hits'][0]['customVariables']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['customDimensions']"
+								},
+								"sink": {
+									"name": "hits'][0]['customDimensions']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['customMetrics']"
+								},
+								"sink": {
+									"name": "hits'][0]['customMetrics']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['type']"
+								},
+								"sink": {
+									"name": "type"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['social']['socialNetwork']"
+								},
+								"sink": {
+									"name": "socialNetwork"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['social']['hasSocialSourceReferral']"
+								},
+								"sink": {
+									"name": "hasSocialSourceReferral"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['social']['socialInteractionNetworkAction']"
+								},
+								"sink": {
+									"name": "socialInteractionNetworkAction"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['contentGroup1']"
+								},
+								"sink": {
+									"name": "contentGroup1"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['contentGroup2']"
+								},
+								"sink": {
+									"name": "contentGroup2"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['contentGroup3']"
+								},
+								"sink": {
+									"name": "contentGroup3"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['contentGroup4']"
+								},
+								"sink": {
+									"name": "contentGroup4"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['contentGroup5']"
+								},
+								"sink": {
+									"name": "contentGroup5"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['previousContentGroup1']"
+								},
+								"sink": {
+									"name": "previousContentGroup1"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['previousContentGroup2']"
+								},
+								"sink": {
+									"name": "previousContentGroup2"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['previousContentGroup3']"
+								},
+								"sink": {
+									"name": "previousContentGroup3"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['previousContentGroup4']"
+								},
+								"sink": {
+									"name": "previousContentGroup4"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['previousContentGroup5']"
+								},
+								"sink": {
+									"name": "previousContentGroup5"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['contentGroup']['contentGroupUniqueViews2']"
+								},
+								"sink": {
+									"name": "contentGroupUniqueViews2"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['dataSource']"
+								},
+								"sink": {
+									"name": "dataSource"
+								}
+							},
+							{
+								"source": {
+									"path": "$['hits'][0]['publisher_infos']"
+								},
+								"sink": {
+									"name": "hits'][0]['publisher_infos']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['fullVisitorId']"
+								},
+								"sink": {
+									"name": "fullVisitorId"
+								}
+							},
+							{
+								"source": {
+									"path": "$['channelGrouping']"
+								},
+								"sink": {
+									"name": "channelGrouping"
+								}
+							},
+							{
+								"source": {
+									"path": "$['socialEngagementType']"
+								},
+								"sink": {
+									"name": "socialEngagementType"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
 				},
 				"inputs": [
 					{
@@ -50,7 +895,7 @@
 						"referenceName": "DS_BlobStorage",
 						"type": "DatasetReference",
 						"parameters": {
-							"FileName": "azurefile.json"
+							"FileName": "azurefile1.json"
 						}
 					}
 				]
