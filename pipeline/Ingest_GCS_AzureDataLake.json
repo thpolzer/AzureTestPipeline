@@ -1,0 +1,62 @@
+{
+	"name": "Ingest_GCS_AzureDataLake",
+	"properties": {
+		"activities": [
+			{
+				"name": "CopyFromGCS",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "GoogleCloudStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "jsondata",
+							"wildcardFileName": "*12.json",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "PreserveHierarchy"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_GCS_json",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_BlobStorage_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"fileName": "ga_sample12.json"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
