@@ -51,10 +51,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'secretAccessKey' of 'LS_GoogleCloudStorage_adac'"
 		},
-		"LS_GoogleCloudStorage_adac_project_secretAccessKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'secretAccessKey' of 'LS_GoogleCloudStorage_adac_project'"
-		},
 		"GoogleBigQueryManager_properties_typeProperties_clientId": {
 			"type": "string",
 			"defaultValue": "320079480011-rrrlls748n3dkqb37c8jg3666gf1me5j.apps.googleusercontent.com"
@@ -74,10 +70,6 @@
 		"LS_GoogleCloudStorage_adac_properties_typeProperties_accessKeyId": {
 			"type": "string",
 			"defaultValue": "GOOGFSYANZO4GMOI2TGGMC4V"
-		},
-		"LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId": {
-			"type": "string",
-			"defaultValue": "GOOGFXAJYXNUZK2DFT4GMTC7"
 		}
 	},
 	"variables": {
@@ -228,24 +220,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/LS_GoogleCloudStorage_adac_project')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "GoogleCloudStorage",
-				"typeProperties": {
-					"serviceUrl": "https://storage.googleapis.com",
-					"accessKeyId": "[parameters('LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId')]",
-					"secretAccessKey": {
-						"type": "SecureString",
-						"value": "[parameters('LS_GoogleCloudStorage_adac_project_secretAccessKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ArchiveDS')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -271,367 +245,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_RawData')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DC_GCS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_GoogleCloudStorage_adac_project",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "GoogleCloudStorageLocation",
-						"bucketName": "adac-cdh-test",
-						"fileName": "testdata.json"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"visitNumber": {
-							"type": "string"
-						},
-						"visitId": {
-							"type": "string"
-						},
-						"visitStartTime": {
-							"type": "string"
-						},
-						"date": {
-							"type": "string"
-						},
-						"totals": {
-							"type": "object",
-							"properties": {
-								"visits": {
-									"type": "string"
-								},
-								"hits": {
-									"type": "string"
-								},
-								"pageviews": {
-									"type": "string"
-								},
-								"bounces": {
-									"type": "string"
-								},
-								"newVisits": {
-									"type": "string"
-								},
-								"sessionQualityDim": {
-									"type": "string"
-								}
-							}
-						},
-						"trafficSource": {
-							"type": "object",
-							"properties": {
-								"campaign": {
-									"type": "string"
-								},
-								"source": {
-									"type": "string"
-								},
-								"medium": {
-									"type": "string"
-								},
-								"adwordsClickInfo": {
-									"type": "object",
-									"properties": {
-										"criteriaParameters": {
-											"type": "string"
-										}
-									}
-								},
-								"referralPath": {
-									"type": "string"
-								}
-							}
-						},
-						"device": {
-							"type": "object",
-							"properties": {
-								"browser": {
-									"type": "string"
-								},
-								"browserVersion": {
-									"type": "string"
-								},
-								"browserSize": {
-									"type": "string"
-								},
-								"operatingSystem": {
-									"type": "string"
-								},
-								"operatingSystemVersion": {
-									"type": "string"
-								},
-								"isMobile": {
-									"type": "boolean"
-								},
-								"mobileDeviceBranding": {
-									"type": "string"
-								},
-								"mobileDeviceModel": {
-									"type": "string"
-								},
-								"mobileInputSelector": {
-									"type": "string"
-								},
-								"mobileDeviceInfo": {
-									"type": "string"
-								},
-								"mobileDeviceMarketingName": {
-									"type": "string"
-								},
-								"flashVersion": {
-									"type": "string"
-								},
-								"language": {
-									"type": "string"
-								},
-								"screenColors": {
-									"type": "string"
-								},
-								"screenResolution": {
-									"type": "string"
-								},
-								"deviceCategory": {
-									"type": "string"
-								}
-							}
-						},
-						"geoNetwork": {
-							"type": "object",
-							"properties": {
-								"continent": {
-									"type": "string"
-								},
-								"subContinent": {
-									"type": "string"
-								},
-								"country": {
-									"type": "string"
-								},
-								"region": {
-									"type": "string"
-								},
-								"metro": {
-									"type": "string"
-								},
-								"city": {
-									"type": "string"
-								},
-								"cityId": {
-									"type": "string"
-								},
-								"networkDomain": {
-									"type": "string"
-								},
-								"latitude": {
-									"type": "string"
-								},
-								"longitude": {
-									"type": "string"
-								},
-								"networkLocation": {
-									"type": "string"
-								}
-							}
-						},
-						"customDimensions": {
-							"type": "array"
-						},
-						"hits": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"hitNumber": {
-										"type": "string"
-									},
-									"time": {
-										"type": "string"
-									},
-									"hour": {
-										"type": "string"
-									},
-									"minute": {
-										"type": "string"
-									},
-									"isInteraction": {
-										"type": "boolean"
-									},
-									"isEntrance": {
-										"type": "boolean"
-									},
-									"isExit": {
-										"type": "boolean"
-									},
-									"referer": {
-										"type": "string"
-									},
-									"page": {
-										"type": "object",
-										"properties": {
-											"pagePath": {
-												"type": "string"
-											},
-											"hostname": {
-												"type": "string"
-											},
-											"pageTitle": {
-												"type": "string"
-											},
-											"pagePathLevel1": {
-												"type": "string"
-											},
-											"pagePathLevel2": {
-												"type": "string"
-											},
-											"pagePathLevel3": {
-												"type": "string"
-											},
-											"pagePathLevel4": {
-												"type": "string"
-											}
-										}
-									},
-									"appInfo": {
-										"type": "object",
-										"properties": {
-											"screenName": {
-												"type": "string"
-											},
-											"landingScreenName": {
-												"type": "string"
-											},
-											"exitScreenName": {
-												"type": "string"
-											},
-											"screenDepth": {
-												"type": "string"
-											}
-										}
-									},
-									"exceptionInfo": {
-										"type": "object",
-										"properties": {
-											"isFatal": {
-												"type": "boolean"
-											}
-										}
-									},
-									"product": {
-										"type": "array"
-									},
-									"promotion": {
-										"type": "array"
-									},
-									"eCommerceAction": {
-										"type": "object",
-										"properties": {
-											"action_type": {
-												"type": "string"
-											},
-											"step": {
-												"type": "string"
-											}
-										}
-									},
-									"experiment": {
-										"type": "array"
-									},
-									"customVariables": {
-										"type": "array"
-									},
-									"customDimensions": {
-										"type": "array"
-									},
-									"customMetrics": {
-										"type": "array"
-									},
-									"type": {
-										"type": "string"
-									},
-									"social": {
-										"type": "object",
-										"properties": {
-											"socialNetwork": {
-												"type": "string"
-											},
-											"hasSocialSourceReferral": {
-												"type": "string"
-											},
-											"socialInteractionNetworkAction": {
-												"type": "string"
-											}
-										}
-									},
-									"contentGroup": {
-										"type": "object",
-										"properties": {
-											"contentGroup1": {
-												"type": "string"
-											},
-											"contentGroup2": {
-												"type": "string"
-											},
-											"contentGroup3": {
-												"type": "string"
-											},
-											"contentGroup4": {
-												"type": "string"
-											},
-											"contentGroup5": {
-												"type": "string"
-											},
-											"previousContentGroup1": {
-												"type": "string"
-											},
-											"previousContentGroup2": {
-												"type": "string"
-											},
-											"previousContentGroup3": {
-												"type": "string"
-											},
-											"previousContentGroup4": {
-												"type": "string"
-											},
-											"previousContentGroup5": {
-												"type": "string"
-											}
-										}
-									},
-									"dataSource": {
-										"type": "string"
-									},
-									"publisher_infos": {
-										"type": "array"
-									}
-								}
-							}
-						},
-						"fullVisitorId": {
-							"type": "string"
-						},
-						"channelGrouping": {
-							"type": "string"
-						},
-						"socialEngagementType": {
-							"type": "string"
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_GoogleCloudStorage_adac_project')]"
 			]
 		},
 		{
@@ -725,7 +338,7 @@
 							"value": "@dataset().fileName",
 							"type": "Expression"
 						},
-						"folderPath": "jsondata",
+						"folderPath": "cdh",
 						"container": "rawzone"
 					}
 				},
@@ -750,7 +363,7 @@
 					"location": {
 						"type": "GoogleCloudStorageLocation",
 						"bucketName": "cdh-marketingdata",
-						"fileName": "testdata_subset_12.json"
+						"folderPath": "jsondata"
 					}
 				},
 				"schema": {
@@ -1673,6 +1286,44 @@
 				"[concat(variables('factoryId'), '/datasets/DS_GoogleBigQuery_SourceTable')]",
 				"[concat(variables('factoryId'), '/datasets/DS_BigQueryTable')]",
 				"[concat(variables('factoryId'), '/datasets/DS_BlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TriggerTest')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline1",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-06-14T09:01:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								2
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
 			]
 		}
 	]

@@ -38,9 +38,6 @@
 		"LS_GoogleCloudStorage_adac_secretAccessKey": {
 			"value": ""
 		},
-		"LS_GoogleCloudStorage_adac_project_secretAccessKey": {
-			"value": ""
-		},
 		"GoogleBigQueryManager_properties_typeProperties_clientId": {
 			"value": "320079480011-rrrlls748n3dkqb37c8jg3666gf1me5j.apps.googleusercontent.com"
 		},
@@ -55,9 +52,6 @@
 		},
 		"LS_GoogleCloudStorage_adac_properties_typeProperties_accessKeyId": {
 			"value": "GOOGFSYANZO4GMOI2TGGMC4V"
-		},
-		"LS_GoogleCloudStorage_adac_project_properties_typeProperties_accessKeyId": {
-			"value": "GOOGFXAJYXNUZK2DFT4GMTC7"
 		},
 		"containerUri": {
 			"value": ""
